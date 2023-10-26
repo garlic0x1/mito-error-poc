@@ -40,3 +40,6 @@ Clean up:
 #+begin_src shell
 make clean
 #+end_src
+
+* Update
+The issue seems to be in the cl-dbi package, as using that alone causes the same problem

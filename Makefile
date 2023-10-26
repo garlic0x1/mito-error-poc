@@ -7,7 +7,7 @@
 INSTALL_DIRECTORY = ~/.local/bin
 LISP ?= sbcl
 
-default: reinstall
+default: install
 
 prepare:
 	touch ~/.cache/mito_error_poc.sqlite3
