@@ -1,0 +1,42 @@
+#+title: Readme
+
+* Issue
+Mito seems to be causing a memory corruption problem when I package the application as a binary executable.  Everything works fine in an interactive setting and I only see this when running the binary SBCL makes.
+
+I have tried both (asdf:make) and (sb-ext:save-lisp-and-die) to make binaries, but I get the same issue with both
+
+* Recreating the bug
+Build the application
+#+begin_src shell
+git clone https://github.com/garlic0x1/mito-error-poc.git
+cd mito-error-poc
+make install
+#+end_src
+
+Now you should have `mito-error-poc` executable in your path (makefile uses ~/.local/bin)
+
+Running the executable:
+
+#+begin_src
+~> mito-error-poc
+CORRUPTION WARNING in SBCL pid 27880 tid 27880:
+Memory fault at 0x55e3ced68541 (pc=0x7f7cd5f1f62d, fp=0x561f0e597f00, sp=0x7f7cd627fa50) tid 27880
+The integrity of this image is possibly compromised.
+Continuing with fingers crossed.
+
+debugger invoked on a SB-SYS:MEMORY-FAULT-ERROR in thread
+#<THREAD tid=27880 "main thread" RUNNING {10023F0003}>:
+  Unhandled memory fault at #x55E3CED68541.
+
+Type HELP for debugger help, or (SB-EXT:EXIT) to exit from SBCL.
+
+restarts (invokable by number or by possibly-abbreviated name):
+  0: [ABORT] Exit from the current thread.
+
+(SB-SYS:MEMORY-FAULT-ERROR #<unused argument> #.(SB-SYS:INT-SAP #X55E3CED68541))
+#+end_src
+
+Clean up:
+#+begin_src shell
+make clean
+#+end_src
